@@ -1,5 +1,10 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
-
+{{#each this.meals as |meal|}}
+  {{meal.name}}<br>
+{{/each}}
+<hr>
+{{#each this.planMeals as |meal|}}
+  {{meal.name}}<br>
+{{/each}}
+<hr>
+<button type="button" {{on "click" this.updateMeal}}>Update</button>
 {{outlet}}
