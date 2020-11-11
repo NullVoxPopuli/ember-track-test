@@ -1,29 +1,32 @@
 import Service from '@ember/service';
 
-import { cached } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
+
 import {
   TrackedArray,
 } from 'tracked-built-ins';
 
-export default class MealsStoreService extends Service {
-  @cached
-  get _mealsArray() {
-    return [this.newMeal(), this.newMeal(), this.newMeal()];
-  }
+class Meal {
+  @tracked name;
 
-  @cached
-  get mealsArray() {
-    return this._mealsArray;
+  constructor(name) {
+    this.name = name;
   }
-  // mealsArray = new TrackedArray(this._mealsArray);
+}
+
+function newMeal() {
+  return new Meal(Math.ceil(Math.random() * 100));
+}
+
+export default class MealsStoreService extends Service {
+  mealsArray = new TrackedArray([ newMeal(), newMeal(), newMeal() ]);
 
   get length() {
-    return 3;
+    return this.mealsArray.length;
   }
-  newMeal() {
-    return { name: Math.ceil(Math.random() * 100) };
-  }
+
+
   updateMeal() {
-    this.mealsArray.replace(1, 1, [ this.newMeal() ]);
+    this.mealsArray.replace(1, 1, [ newMeal() ]);
   }
 }
