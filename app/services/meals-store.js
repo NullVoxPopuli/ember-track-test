@@ -1,6 +1,5 @@
 import Service from '@ember/service';
 
-import { alias } from '@ember/object/computed';
 import { cached } from '@glimmer/tracking';
 import {
   TrackedArray,
@@ -12,7 +11,10 @@ export default class MealsStoreService extends Service {
     return [this.newMeal(), this.newMeal(), this.newMeal()];
   }
 
-  @alias('_mealsArray') mealsArray;
+  @cached
+  get mealsArray() {
+    return this._mealsArray;
+  }
   // mealsArray = new TrackedArray(this._mealsArray);
 
   get length() {

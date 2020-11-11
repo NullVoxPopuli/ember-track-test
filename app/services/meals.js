@@ -1,6 +1,5 @@
 import Service from '@ember/service';
 
-import { alias } from '@ember/object/computed';
 import { inject } from '@ember/service';
 import { cached } from '@glimmer/tracking';
 
@@ -13,7 +12,10 @@ export default class MealsService extends Service {
   updateMeal() {
     this.mealsStore.updateMeal();
   }
-  @alias('mealsStore.mealsArray') meals;
+  @cached
+  get meals() {
+    return this.mealsStore.mealsArray;
+  }
   @cached
   get randomMeals() {
     return randomize(this.meals);
